@@ -45,7 +45,8 @@ const selectItem = (event, img) => {
   if (item === -1) {
     sliders.push(img);
   } else {
-    alert('Hey, Already added !')
+    element.classList.remove('added');
+    sliders = sliders.filter(item => item !== img);
   }
 }
 var timer
@@ -68,7 +69,7 @@ const createSlider = () => {
   document.querySelector('.main').style.display = 'block';
   // hide image aria
   imagesArea.style.display = 'none';
-  const duration = document.getElementById('duration')+10000;
+  const duration = document.getElementById('duration').value ||5000;
   sliders.forEach(slide => {
     let item = document.createElement('div')
     item.className = "slider-item";
@@ -108,10 +109,12 @@ const changeSlide = (index) => {
     item.style.display = "none"
   })
 
+
+
   items[index].style.display = "block"
 }
 
-searchBtn.addEventListener('click', function () {
+searchBtn.addEventListener('click', function(e) {
   document.querySelector('.main').style.display = 'none';
   clearInterval(timer);
   const search = document.getElementById('search');
@@ -122,3 +125,16 @@ searchBtn.addEventListener('click', function () {
 sliderBtn.addEventListener('click', function () {
   createSlider()
 })
+
+
+const input =document.getElementById('search');
+
+input.addEventListener('keyup',(e) => {
+  if(e.keyCode === 13){
+    getImages(e.target.value)
+    sliders.length = 0;
+  }
+})
+
+
+  
